@@ -1,6 +1,6 @@
 from app_config import MODEL_PATH, MODEL_TYPE
 from core import logger  # local package import
-from flask import Response, jsonify, render_template, request
+from flask import jsonify, render_template, request
 from flask.views import MethodView, View
 from services import CaptureItemService, PredictService
 

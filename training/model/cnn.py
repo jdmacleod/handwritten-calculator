@@ -7,22 +7,35 @@ import tensorflow as tf
 from tensorflow import keras
 
 
-def create_model(num_classes:int=10):
+def create_model(num_classes: int = 10):
     """Create example CNN model after the TensorFlow tutorial."""
-    model = tf.keras.Sequential(name="CNN_Sequential",
+    model = tf.keras.Sequential(
+        name="CNN_Sequential",
         layers=[
-            keras.Input(shape=(28,28,1)),
-            keras.layers.Conv2D(filters=32, kernel_size=(3, 3), padding="same", activation="relu"),
-            keras.layers.MaxPool2D(padding="same",),
-            keras.layers.Conv2D(filters=64, kernel_size=(3,3), padding="same",activation="relu"),
-            keras.layers.MaxPool2D(padding="same",),
-            keras.layers.Conv2D(filters=128, kernel_size=(3,3), padding="same",activation="relu"),
-            keras.layers.MaxPool2D(padding="same",),
+            keras.Input(shape=(28, 28, 1)),
+            keras.layers.Conv2D(
+                filters=32, kernel_size=(3, 3), padding="same", activation="relu"
+            ),
+            keras.layers.MaxPool2D(
+                padding="same",
+            ),
+            keras.layers.Conv2D(
+                filters=64, kernel_size=(3, 3), padding="same", activation="relu"
+            ),
+            keras.layers.MaxPool2D(
+                padding="same",
+            ),
+            keras.layers.Conv2D(
+                filters=128, kernel_size=(3, 3), padding="same", activation="relu"
+            ),
+            keras.layers.MaxPool2D(
+                padding="same",
+            ),
             keras.layers.Flatten(),
             keras.layers.Dense(256, activation="relu"),
             keras.layers.Dropout(0.4),
             keras.layers.Dense(num_classes),
-        ]
+        ],
     )
     model.compile(
         optimizer="adam",

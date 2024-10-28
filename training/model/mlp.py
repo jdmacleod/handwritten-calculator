@@ -7,16 +7,18 @@
 import tensorflow as tf
 from tensorflow import keras
 
-def create_model(num_classes:int=10):
+
+def create_model(num_classes: int = 10):
     """Create example MLP model from TensorFlow tutorial."""
-    model = tf.keras.Sequential(name="MLP_Sequential",
+    model = tf.keras.Sequential(
+        name="MLP_Sequential",
         layers=[
-            keras.Input(shape=(28,28,1)),
+            keras.Input(shape=(28, 28, 1)),
             keras.layers.Flatten(),
             keras.layers.Dense(128, activation="relu"),
             keras.layers.Dropout(0.2),
             keras.layers.Dense(num_classes),
-        ]
+        ],
     )
     model.compile(
         optimizer="adam",

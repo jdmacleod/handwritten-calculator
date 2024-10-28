@@ -1,9 +1,5 @@
-import os
-
 import tensorflow as tf
-from tensorflow import keras
-
-from model import cnn   # local package import
+from model import cnn  # local package import
 
 print(f"TensorFlow Version: {tf.version.VERSION}")
 
@@ -13,7 +9,7 @@ print(f"TensorFlow Version: {tf.version.VERSION}")
 )
 
 # MNIST digits dataset has 10 classes, digits 0-9
-NUM_CLASSES=10
+NUM_CLASSES = 10
 
 MODEL_TYPE = "cnn"
 

@@ -21,7 +21,7 @@ def replace_transparent_background(image):
 
     alpha1 = 0
     r2, g2, b2, alpha2 = 255, 255, 255, 255
-    red, green, blue, alpha = (
+    _, _, _, alpha = (
         image_arr[:, :, 0],
         image_arr[:, :, 1],
         image_arr[:, :, 2],
@@ -61,12 +61,6 @@ def resize_image(image):
     return image.resize((8, 8), Image.BILINEAR)
 
 
-def scale_down_intensity(image):
-    image_arr = np.array(image)
-    image_arr = exposure.rescale_intensity(image_arr, out_range=(0, 16))
-    return Image.fromarray(image_arr)
-
-
 def pad_image_borders(image):
     """Pad an image so it has a percentage of open border.
 
@@ -91,7 +85,7 @@ def center_grayscale_image(image):
         centered_image = cv2.warpAffine(
             image, translation_matrix, (image.shape[1], image.shape[0])
         )
-    except:
+    except ImportError:
         logger.warning(
             "Could not import cv2 for image centering, returning unaltered image."
         )
@@ -128,7 +122,7 @@ def center_grayscale_image_pil(image):
 
 
 def ensure_image_padding(image, min_padding_ratio=0.28):
-    """Ensure a grayscale image has minimum padding all around the image contents using PIL."""
+    """Ensure a grayscale image has minimum padding using PIL."""
     # get bounding box of image content
     bbox = image.getbbox()
     logger.debug(f"ensure padding image bbox = {bbox}")
@@ -143,7 +137,7 @@ def ensure_image_padding(image, min_padding_ratio=0.28):
                 ((max_bbox_size * (1.0 + min_padding_ratio)) - image.size[0]) // 2
             )
             logger.debug(
-                f"ensure_padding: padding image all around with black by: {additional_padding} pixels"
+                f"ensure_padding: padding image by: {additional_padding} pixels"
             )
             image = ImageOps.expand(image, border=additional_padding)
     return image
@@ -162,6 +156,5 @@ def process_image(data_uri):
     image = to_grayscale(image)
     image = invert_colors(image)
     image = resize_image(image)
-    # image = scale_down_intensity(image)
 
     return np.array([np.array(image).flatten()])

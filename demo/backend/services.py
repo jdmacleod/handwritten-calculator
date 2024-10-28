@@ -3,13 +3,10 @@ import io
 import logging
 import os
 
-import matplotlib.pyplot as plt
 import numpy as np
 import tensorflow as tf
-
 from core import logger  # local package import
-from image_processing import (center_grayscale_image_pil, ensure_image_padding,
-                              pad_image, process_image, trim_borders)
+from image_processing import center_grayscale_image_pil, ensure_image_padding
 from PIL import Image, ImageOps
 from tensorflow import keras
 

@@ -1,7 +1,7 @@
 import requests
+from app_config import API_URL  # local package import
 from core import logger  # local package import
 
-from app_config import API_URL   # local package import
 
 def predict_digit_from_input(image):
     logger.debug(f"POST with json = {image}")

@@ -1,12 +1,7 @@
 import os
 
-import numpy as np
-import PIL
-import PIL.Image
 import tensorflow as tf
-from tensorflow import keras
-
-from model import cnn   # local package import
+from model import cnn  # local package import
 
 print(f"TensorFlow Version: {tf.version.VERSION}")
 
