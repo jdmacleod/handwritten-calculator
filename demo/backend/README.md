@@ -14,8 +14,6 @@ python -m pip install -U pip
 python -m pip install -r requirements.txt
 ```
 
-## Installation
-
 ## Usage
 
 ```bash
@@ -23,7 +21,9 @@ source development.env
 flask run
 ```
 
-## License
+### Test Service Heartbeat Endpoint
+
+Use [http://localhost:5000/heartbeat](http://localhost:5000/heartbeat) to check backend health.
 
 ## Acknowledgements
 
