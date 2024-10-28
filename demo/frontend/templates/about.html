@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Symbol Recognizer</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <main>
+      {% include("_navigation.html") %}
+      <div class="container">
+        <h1>Handwritten Calculation Recognition demo</h1>
+        <h2>
+          Prediction of simple handwritten integer calculations using Digit and
+          Symbol image classification.
+        </h2>
+        <h3>
+          Uses TensorFlow models trained on
+          <a href="https://yann.lecun.com/exdb/mnist/">MNIST dataset</a> for
+          digits and provides a dataset for symbols, along with an example
+          capture and processing pipeline that was used to collect the symbol
+          dataset.
+        </h3>
+        <h3>
+          Source:
+          <a href="https://github.com/jdmacleod/handwritten-calculator"
+            >https://github.com/jdmacleod/handwritten-calculator</a
+          >
+        </h3>
+        <h4>{{app_name}}-{{app_version}}</h4>
+      </div>
+    </main>
+  </body>
+</html>

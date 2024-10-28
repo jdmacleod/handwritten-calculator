@@ -1,0 +1,109 @@
+import os
+
+import numpy as np
+import PIL
+import PIL.Image
+import tensorflow as tf
+from tensorflow import keras
+
+from model import cnn   # local package import
+
+print(f"TensorFlow Version: {tf.version.VERSION}")
+
+# Load the captured Symbols PNG training dataset from disk.
+# addition_plus
+# division_obelus
+# division_slash
+# multiplication_cross
+# multiplication_dot
+# subtraction_minus
+# six (6) symbols
+
+NUM_CLASSES = 6
+MODEL_TYPE = "cnn"
+
+training_data_dir = os.path.join("symbols_train")
+testing_data_dir = os.path.join("symbols_test")
+
+BATCH_SIZE = 32
+IMG_HEIGHT = 28
+IMG_WIDTH = 28
+
+train_images_ds = tf.keras.utils.image_dataset_from_directory(
+    training_data_dir,
+    color_mode="grayscale",
+    validation_split=0.2,
+    subset="training",
+    seed=123,
+    batch_size=BATCH_SIZE,
+    image_size=(IMG_HEIGHT, IMG_WIDTH),
+)
+
+validate_images_ds = tf.keras.utils.image_dataset_from_directory(
+    training_data_dir,
+    color_mode="grayscale",
+    validation_split=0.2,
+    subset="validation",
+    seed=123,
+    batch_size=BATCH_SIZE,
+    image_size=(IMG_HEIGHT, IMG_WIDTH),
+)
+
+# load a testing dataset (training is split into train + validate, testing is separate)
+# see these references
+# https://keras.io/api/datasets/mnist/
+# https://stackoverflow.com/questions/13610074/is-there-a-rule-of-thumb-for-how-to-divide-a-dataset-into-training-and-validatio
+
+test_images_ds = tf.keras.utils.image_dataset_from_directory(
+    testing_data_dir,
+    color_mode="grayscale",
+    seed=123,
+    batch_size=BATCH_SIZE,
+    image_size=(IMG_HEIGHT, IMG_WIDTH),
+)
+
+class_names = train_images_ds.class_names
+print(class_names)
+
+# scale the pixel values in the training dataset to be between 0-1 instead of 0-255
+# this also converts the pixel values from integer to floating point
+# TODO: find the reference that explains the reasons for this step
+
+normalization_layer = tf.keras.layers.Rescaling(1.0 / 255)
+normalized_train_ds = train_images_ds.map(lambda x, y: (normalization_layer(x), y))
+normalized_validate_ds = validate_images_ds.map(
+    lambda x, y: (normalization_layer(x), y)
+)
+normalized_test_ds = test_images_ds.map(lambda x, y: (normalization_layer(x), y))
+
+# Use only the first 1000 images to speed up initial testing iterations
+# train_labels = train_labels[:1000]
+# test_labels = test_labels[:1000]
+
+# train_images = train_images[:1000]
+# test_images = test_images[:1000]
+
+model = cnn.create_model(num_classes=NUM_CLASSES)
+model.summary()
+
+# evaluate model before training on the test set
+# here we pass in a tf.data.Dataset as the input data
+# https://www.tensorflow.org/api_docs/python/tf/keras/Model#evaluate
+loss, acc = model.evaluate(normalized_test_ds, verbose=2)
+print("untrained model, test accuracy: {:5.2f}%".format(100 * acc))
+
+# train the model
+# here we pass in a tf.data.Dataset as the input data
+# https://www.tensorflow.org/api_docs/python/tf/keras/Model#fit
+model.fit(normalized_train_ds, validation_data=normalized_validate_ds, epochs=10)
+
+# evaluate model after training on the test set
+# here we pass in a tf.data.Dataset as the input data
+loss, acc = model.evaluate(normalized_test_ds, verbose=2)
+print("trained model, test accuracy: {:5.2f}%".format(100 * acc))
+
+# This model is a "multi-layer perceptron"
+model_filename = f"hc-symbols-{MODEL_TYPE}-model.keras"
+
+model.save(model_filename)
+print(f"saved trained model as: {model_filename}")

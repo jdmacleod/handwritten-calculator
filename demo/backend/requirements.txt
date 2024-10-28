@@ -1,0 +1,10 @@
+black
+isort
+flake8
+mypy
+adr
+numpy
+matplotlib
+Flask
+Pillow
+tensorflow

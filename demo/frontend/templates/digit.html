@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Digit Recognizer</title>
+    <link rel="stylesheet" href="/static/digit-style.css" />
+  </head>
+  <body>
+    <main>
+      {% include("_navigation.html") %}
+      <div class="container">
+        <h1>Digit Recognizer</h1>
+        <div class="search-box">
+          <div class="draw-title">Draw<br />a digit:</div>
+          <div class="canvas-div">
+            <canvas
+              class="canvas"
+              id="canvas"
+              width="112px"
+              height="112px"
+            ></canvas>
+          </div>
+          <div class="buttons">
+            <button class="button-predict" id="predictButton">Predict</button>
+            <button class="button" id="clearButton">Clear</button>
+          </div>
+          <div class="prediction-container">
+            <h3 class="prediction-heading">Prediction:</h3>
+            <div class="prediction-label">
+              <div class="prediction" id="prediction">?</div>
+              <div class="confidence" id="confidence"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/static/digit-script.js"></script>
+  </body>
+</html>

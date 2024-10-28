@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Capture Symbol</title>
+    <link rel="stylesheet" href="/static/capture-style.css" />
+  </head>
+  <body>
+    <main>
+      {% include("_navigation.html") %}
+      <div class="container">
+        <h1>Symbol Capture</h1>
+        <div class="search-box">
+          <div class="draw-title">Draw<br />a matching<br />symbol:</div>
+          <div class="canvas-div">
+            <canvas
+              class="canvas"
+              id="canvas"
+              width="112px"
+              height="112px"
+            ></canvas>
+          </div>
+          <div class="buttons">
+            <button class="button-predict" id="captureButton">Capture</button>
+            <button class="button" id="clearButton">Clear</button>
+          </div>
+          <div class="symbol-container">
+            <div class="dropdown">
+              <select id="symbolSelect" onChange="updateSymbolExample()">
+                <option value="&plus;">addition_plus</option>
+                <option value="&minus;">subtraction_minus</option>
+                <option value="&times;">multiplication_cross</option>
+                <option value="&sdot;">multiplication_dot</option>
+                <option value="&divide;">division_obelus</option>
+                <option value="&#8725;">division_slash</option>
+              </select>
+            </div>
+            <div class="symbol-label">
+              <div class="symbol" id="symbol">?</div>
+              <div class="confidence" id="confidence"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/static/capture-script.js"></script>
+  </body>
+</html>

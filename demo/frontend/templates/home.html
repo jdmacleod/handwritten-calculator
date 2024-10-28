@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>MDAS Arithmetic Recognizer</title>
+    <link rel="stylesheet" href="/static/calc-style.css" />
+  </head>
+  <body>
+    <main>
+      {% include("_navigation.html") %}
+      <div class="container">
+        <h1>MDAS Arithmetic Recognizer</h1>
+        <div class="search-box">
+          <div class="draw-title">Write<br />a calculation<br />like "3+4"</div>
+          <div class="draw-box">
+            <div class="canvas-div">
+              <canvas
+                class="canvas"
+                id="canvas1"
+                width="112px"
+                height="112px"
+              ></canvas>
+            </div>
+            <button class="button" id="clearButton1">Clear</button>
+            <div class="prediction-container-single">
+              <div class="prediction-label">
+                <div class="prediction" id="prediction1">?</div>
+                <div class="confidence" id="confidence1"></div>
+              </div>
+            </div>
+          </div>
+          <div class="draw-box">
+            <div class="canvas-div">
+              <canvas
+                class="canvas"
+                id="canvas2"
+                width="112px"
+                height="112px"
+              ></canvas>
+            </div>
+            <button class="button" id="clearButton2">Clear</button>
+            <div class="prediction-container-single">
+              <div class="prediction-label">
+                <div class="prediction" id="prediction2">?</div>
+                <div class="confidence" id="confidence2"></div>
+              </div>
+            </div>
+          </div>
+          <div class="draw-box">
+            <div class="canvas-div">
+              <canvas
+                class="canvas"
+                id="canvas3"
+                width="112px"
+                height="112px"
+              ></canvas>
+            </div>
+            <button class="button" id="clearButton3">Clear</button>
+            <div class="prediction-container-single">
+              <div class="prediction-label">
+                <div class="prediction" id="prediction3">?</div>
+                <div class="confidence" id="confidence3"></div>
+              </div>
+            </div>
+          </div>
+          <div class="buttons">
+            <button class="button-predict" id="predictButton">Predict</button>
+            <button class="button" id="clearAllButton">Clear All</button>
+          </div>
+          <div class="prediction-container">
+            <h3 class="prediction-heading">=</h3>
+            <div class="prediction-label">
+              <div class="prediction" id="predictionAll">?</div>
+              <div class="confidence" id="confidenceAll"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/static/calc-script.js"></script>
+  </body>
+</html>
