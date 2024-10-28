@@ -2,6 +2,8 @@
 
 A demo application using ML image classification to process basic hand-drawn integer MDAS arithmetic (Multiply, Divide, Add, Subtract).
 
+![MDAS Calculator](./assets/mdas_calculate.png?raw=true)
+
 Implemented using [TensorFlow](https://www.tensorflow.org/) and [Keras](https://keras.io/).
 
 ## Getting Started
