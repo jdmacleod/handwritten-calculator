@@ -23,12 +23,12 @@ The images are partitioned into a training set (5K), a testing set (0.5K), and a
 
 ```bash
 unzip mdas_symbols_v1.zip
-ls -l symbols_partioned
+ls -l symbols_partitioned
 ```
 
 #### Directory Structure
 
-- symbols_partioned/
+- symbols_partitioned/
   - test
   - train
   - val
