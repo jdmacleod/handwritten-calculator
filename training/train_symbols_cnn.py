@@ -17,8 +17,11 @@ print(f"TensorFlow Version: {tf.version.VERSION}")
 NUM_CLASSES = 6
 MODEL_TYPE = "cnn"
 
-training_data_dir = os.path.join("symbols_train")
-testing_data_dir = os.path.join("symbols_test")
+DATASET_DIR = os.path.join(os.pardir, "mdas_symbol_dataset", "symbols_partitioned")
+
+training_data_dir = os.path.join(DATASET_DIR, "train")
+testing_data_dir = os.path.join(DATASET_DIR, "test")
+validation_data_dir = os.path.join(DATASET_DIR, "val")
 
 BATCH_SIZE = 32
 IMG_HEIGHT = 28
@@ -27,24 +30,20 @@ IMG_WIDTH = 28
 train_images_ds = tf.keras.utils.image_dataset_from_directory(
     training_data_dir,
     color_mode="grayscale",
-    validation_split=0.2,
-    subset="training",
     seed=123,
     batch_size=BATCH_SIZE,
     image_size=(IMG_HEIGHT, IMG_WIDTH),
 )
 
 validate_images_ds = tf.keras.utils.image_dataset_from_directory(
-    training_data_dir,
+    validation_data_dir,
     color_mode="grayscale",
-    validation_split=0.2,
-    subset="validation",
     seed=123,
     batch_size=BATCH_SIZE,
     image_size=(IMG_HEIGHT, IMG_WIDTH),
 )
 
-# load a testing dataset (training is split into train + validate, testing is separate)
+# load the testing dataset
 # see these references
 # https://keras.io/api/datasets/mnist/
 # https://stackoverflow.com/questions/13610074/is-there-a-rule-of-thumb-for-how-to-divide-a-dataset-into-training-and-validatio
