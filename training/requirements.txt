@@ -1,2 +1,5 @@
 tensorflow
 matplotlib
+Pillow
+tqdm
+split-folders
