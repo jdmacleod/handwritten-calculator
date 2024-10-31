@@ -16,6 +16,10 @@ python -m pip install -U pip
 python -m pip install -r requirements.txt
 ```
 
+### Unpack MDAS dataset (needed for training)
+
+See [README](../mdas_symbol_dataset/README.md)
+
 ### Train and Deploy Models
 
 #### Train Multilayer Perceptron models
@@ -44,13 +48,15 @@ Follow the web demo app [README](../demo/README.md) to set up the frontend and b
 
 Use <http://localhost:5001/capture> to capture symbol training data images.
 
+The stored images will be written to `...demo/backend/capture/`.
+
 #### Process Captured Symbol Images
 
 ```bash
 # copy the captured written symbol images into this directory
-cp -rpv ../handwritten-calculator-service/capture .
-# process the symbol dataset to amplify it
-python amplify_symbol_data.py
+cp -rpv ../demo/backend/capture ./symbols_captured
+# process the symbol dataset to amplify it and partition to training, test, validation
+python scripts/amplify_symbol_data.py
 ```
 
 ## Acknowledgements
