@@ -4,6 +4,10 @@ TensorFlow models for recognition of handwritten numbers and symbols with traini
 
 Trained models and a sample symbol dataset are provided. The information below can be used to repeat the training that was done, or to train with new parameters, possibly on a new dataset.
 
+## Prerequisites
+
+[Python 3.12](https://www.python.org/) and [Python Virtual Environments](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/#create-and-use-virtual-environments) were used when training.
+
 ## Quick Start
 
 ### Set Up Python3 Virtual Environment
