@@ -20,7 +20,7 @@ amplified_img_path = Path("symbols_amplified")
 
 def generate_rotated_image(
     imagefile: str, dataset_path: str, rotation_degrees: int = 0
-):
+) -> None:
     """Generate a rotated image from the provided image, writing to disk.
 
     Args:
@@ -34,7 +34,9 @@ def generate_rotated_image(
     rotated_image.save(os.path.join(dataset_path, duplicate_name))
 
 
-def generate_mirrored_image(imagefile: str, dataset_path: str, action: str = "flop"):
+def generate_mirrored_image(
+    imagefile: str, dataset_path: str, action: str = "flop"
+) -> None:
     """Generate a mirrored image from the provided image, writing to disk.
 
     Args:
@@ -52,11 +54,11 @@ def generate_mirrored_image(imagefile: str, dataset_path: str, action: str = "fl
         mirrored_image.save(os.path.join(dataset_path, duplicate_name))
     else:
         raise RuntimeWarning(
-            f"Unexpected mirror action {action}, skipping it for image {file}!"
+            f"Unexpected mirror action {action}, skipping it for image {imagefile}!"
         )
 
 
-def amplify_dataset(dataset_path, operations=[]):
+def amplify_dataset(dataset_path: str, operations: list[str] | None = None) -> None:
     """Duplicate existing files in a directory with image processing.
 
     Apply operations per provided list
@@ -67,34 +69,45 @@ def amplify_dataset(dataset_path, operations=[]):
         flop - mirror image, swapping left for right (about a vertical axis)
 
     """
-    list_of_files = glob.glob(f"{dataset_path}/*.png")
-    folder_path = Path(dataset_path)
-    for file in tqdm.tqdm(list_of_files, desc=folder_path.stem):
-        for op in operations:
-            match op:
-                case "rot90":
-                    generate_rotated_image(
-                        imagefile=file, dataset_path=dataset_path, rotation_degrees=90
-                    )
-                case "rot180":
-                    generate_rotated_image(
-                        imagefile=file, dataset_path=dataset_path, rotation_degrees=180
-                    )
-                case "rot270":
-                    generate_rotated_image(
-                        imagefile=file, dataset_path=dataset_path, rotation_degrees=270
-                    )
-                case "flip":
-                    generate_mirrored_image(
-                        imagefile=file, dataset_path=dataset_path, action="flip"
-                    )
-                case "flop":
-                    generate_mirrored_image(
-                        imagefile=file, dataset_path=dataset_path, action="flop"
-                    )
-                case _:
-                    pass
-    logger.info(f"amplified {dataset_path} with operations {operations}.")
+    if operations:
+        list_of_files = glob.glob(f"{dataset_path}/*.png")
+        folder_path = Path(dataset_path)
+        for file in tqdm.tqdm(list_of_files, desc=folder_path.stem):
+            for op in operations:
+                match op:
+                    case "rot90":
+                        generate_rotated_image(
+                            imagefile=file,
+                            dataset_path=dataset_path,
+                            rotation_degrees=90,
+                        )
+                    case "rot180":
+                        generate_rotated_image(
+                            imagefile=file,
+                            dataset_path=dataset_path,
+                            rotation_degrees=180,
+                        )
+                    case "rot270":
+                        generate_rotated_image(
+                            imagefile=file,
+                            dataset_path=dataset_path,
+                            rotation_degrees=270,
+                        )
+                    case "flip":
+                        generate_mirrored_image(
+                            imagefile=file, dataset_path=dataset_path, action="flip"
+                        )
+                    case "flop":
+                        generate_mirrored_image(
+                            imagefile=file, dataset_path=dataset_path, action="flop"
+                        )
+                    case _:
+                        pass
+        logger.info(f"amplified {dataset_path} with operations {operations}.")
+    else:
+        logger.warning(
+            f"no operations provided to amplify dataset {dataset_path}, skipping it!"
+        )
 
 
 # copy the captured files to a directory for amplification

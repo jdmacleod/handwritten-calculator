@@ -84,7 +84,7 @@ model.summary()
 # here we pass in a tf.data.Dataset as the input data
 # https://www.tensorflow.org/api_docs/python/tf/keras/Model#evaluate
 loss, acc = model.evaluate(normalized_test_ds, verbose=2)
-print("untrained model, test accuracy: {:5.2f}%".format(100 * acc))
+print(f"untrained model, test accuracy: {100 * acc:5.2f}%")
 
 # train the model
 # here we pass in a tf.data.Dataset as the input data
@@ -94,7 +94,7 @@ model.fit(normalized_train_ds, validation_data=normalized_validate_ds, epochs=10
 # evaluate model after training on the test set
 # here we pass in a tf.data.Dataset as the input data
 loss, acc = model.evaluate(normalized_test_ds, verbose=2)
-print("trained model, test accuracy: {:5.2f}%".format(100 * acc))
+print(f"trained model, test accuracy: {100 * acc:5.2f}%")
 
 # This model is a "multi-layer perceptron"
 model_filename = f"hc-symbols-{MODEL_TYPE}-model.keras"

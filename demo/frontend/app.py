@@ -1,3 +1,5 @@
+"""Frontend application endpoints."""
+
 from app_config import APP_NAME, APP_VERSION
 from flask import Flask, jsonify, render_template, request
 from model import (
@@ -10,35 +12,41 @@ app = Flask(__name__)
 
 
 @app.route("/")
-def home():
+def home() -> str:
+    """The home page of the application."""
     return render_template("home.html")
 
 
 @app.route("/about")
-def about():
+def about() -> str:
+    """The about page of the application."""
     return render_template("about.html", app_name=APP_NAME, app_version=APP_VERSION)
 
 
 @app.route("/capture")
-def capture():
+def capture() -> str:
+    """Capture page of the application."""
     return render_template("capture.html")
 
 
 @app.route("/digit")
-def digit():
+def digit() -> str:
+    """Digit recognition page of the application."""
     return render_template("digit.html")
 
 
 @app.route("/symbol")
-def symbol():
+def symbol() -> str:
+    """Symbol recognition page of the application."""
     return render_template("symbol.html")
 
 
 @app.route("/predict-digit", methods=["GET", "POST"])
-def predict_digit():
+def predict_digit() -> str:
+    """Digit prediction endpoint."""
     raw_input = request.get_json(silent=True)
 
-    app.logger.info(f"Sending raw_input: {raw_input}")
+    app.logger.info("Sending raw_input: %s", raw_input)
     prediction, confidence = predict_digit_from_input(raw_input)
 
     response = {"prediction": str(prediction), "confidence": str(confidence)}
@@ -47,10 +55,11 @@ def predict_digit():
 
 
 @app.route("/predict-symbol", methods=["GET", "POST"])
-def predict_symbol():
+def predict_symbol() -> str:
+    """Symbol prediction endpoint."""
     raw_input = request.get_json(silent=True)
 
-    app.logger.info(f"Sending raw_input: {raw_input}")
+    app.logger.info("Sending raw_input: %s", raw_input)
     prediction, confidence = predict_symbol_from_input(raw_input)
 
     response = {"prediction": str(prediction), "confidence": str(confidence)}
@@ -59,10 +68,11 @@ def predict_symbol():
 
 
 @app.route("/capture-item", methods=["GET", "POST"])
-def capture_item():
+def capture_item() -> str:
+    """Capture item endpoint."""
     raw_input = request.get_json(silent=True)
 
-    app.logger.info(f"Sending raw_input: {raw_input}")
+    app.logger.info("Sending raw_input: %s", raw_input)
     item_filename = capture_item_from_input(raw_input)
 
     response = {"item_filename": str(item_filename)}

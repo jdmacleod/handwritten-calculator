@@ -8,7 +8,7 @@ import tensorflow as tf
 from tensorflow import keras
 
 
-def create_model(num_classes: int = 10):
+def create_model(num_classes: int = 10) -> tf.keras.Model:
     """Create example MLP model from TensorFlow tutorial."""
     model = tf.keras.Sequential(
         name="MLP_Sequential",

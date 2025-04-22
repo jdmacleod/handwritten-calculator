@@ -31,13 +31,13 @@ model.summary()
 
 # evaluate model before training on the test set
 loss, acc = model.evaluate(test_images, test_labels, verbose=2)
-print("untrained model, test accuracy: {:5.2f}%".format(100 * acc))
+print(f"untrained model, test accuracy: {100 * acc:5.2f}%")
 
 model.fit(train_images, train_labels, epochs=10)
 
 # evaluate model after training on the test set
 loss, acc = model.evaluate(test_images, test_labels, verbose=2)
-print("trained model, test accuracy: {:5.2f}%".format(100 * acc))
+print(f"trained model, test accuracy: {100 * acc:5.2f}%")
 
 # This model is a "multi-layer perceptron"
 model_filename = f"hc-digits-{MODEL_TYPE}-model.keras"

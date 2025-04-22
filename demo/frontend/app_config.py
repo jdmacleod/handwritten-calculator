@@ -13,4 +13,6 @@ APP_ROOT = os.getenv("APP_ROOT", "/opt/handwritten-calculator")
 
 API_URL = os.getenv("API_URL", "http://localhost:5000/api/v1")
 
-logger.info(f"using api url {API_URL}")
+logger.info("using api url %s", API_URL)
+
+API_TIMEOUT = int(os.getenv("API_TIMEOUT", "5"))
