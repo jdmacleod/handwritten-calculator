@@ -6,7 +6,14 @@ authors = [
     {name = "Jason MacLeod", email = "jason.d.macleod@gmail.com"},
 ]
 dependencies = [
-    "typer>=0.7.0",
+    "Flask>=3.0.0",
+    "Pillow",
+    "matplotlib",
+    "numpy",
+    "requests",
+    "split-folders",
+    "tensorflow",
+    "tqdm",
 ]
 requires-python = ">=3.10"
 readme = "README.md"

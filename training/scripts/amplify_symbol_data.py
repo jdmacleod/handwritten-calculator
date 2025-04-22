@@ -47,10 +47,10 @@ def generate_mirrored_image(
     image = Image.open(imagefile)
     duplicate_name = f"{str(uuid.uuid4())}.png"
     if action == "flip":
-        mirrored_image = image.transpose(Image.FLIP_TOP_BOTTOM)
+        mirrored_image = image.transpose(Image.Transpose.FLIP_TOP_BOTTOM)
         mirrored_image.save(os.path.join(dataset_path, duplicate_name))
     elif action == "flop":
-        mirrored_image = image.transpose(Image.FLIP_LEFT_RIGHT)
+        mirrored_image = image.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
         mirrored_image.save(os.path.join(dataset_path, duplicate_name))
     else:
         raise RuntimeWarning(
@@ -103,10 +103,10 @@ def amplify_dataset(dataset_path: str, operations: list[str] | None = None) -> N
                         )
                     case _:
                         pass
-        logger.info(f"amplified {dataset_path} with operations {operations}.")
+        logger.info("amplified %s with operations %s.", dataset_path, operations)
     else:
         logger.warning(
-            f"no operations provided to amplify dataset {dataset_path}, skipping it!"
+            "no operations provided to amplify dataset %s, skipping it!", dataset_path
         )
 
 
@@ -117,7 +117,7 @@ shutil.copytree(captured_img_path, amplified_img_path, dirs_exist_ok=True)
 class_subfolders = [f.path for f in os.scandir(amplified_img_path)]
 for subfolder in sorted(class_subfolders):
     folder_path = Path(subfolder)
-    logger.info(f"processing {folder_path.stem}")
+    logger.info("processing group %s", folder_path.stem)
     match folder_path.stem:
         case "addition_plus":
             amplify_dataset(

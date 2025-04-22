@@ -102,7 +102,7 @@ def resize_image(image: Image.Image) -> Image.Image:
     Returns:
         Image.Image: The resized image.
     """
-    return image.resize((8, 8), Image.BILINEAR)
+    return image.resize((8, 8), Image.Resampling.BILINEAR)
 
 
 def center_grayscale_image(image: np.ndarray) -> np.ndarray:
