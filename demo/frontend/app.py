@@ -1,8 +1,9 @@
 """Frontend application endpoints."""
 
-from app_config import APP_NAME, APP_VERSION
 from flask import Flask, jsonify, render_template, request
-from model import (
+
+from .app_config import APP_NAME, APP_VERSION
+from .model import (
     capture_item_from_input,
     predict_digit_from_input,
     predict_symbol_from_input,

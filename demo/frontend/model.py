@@ -1,8 +1,9 @@
 """Models for the frontend."""
 
 import requests
-from app_config import API_TIMEOUT, API_URL  # local package import
-from core import logger  # local package import
+
+from .app_config import API_TIMEOUT, API_URL  # local package import
+from .core import logger  # local package import
 
 
 def predict_digit_from_input(image: str) -> tuple[int, float]:

@@ -1,5 +1,6 @@
 import tensorflow as tf
-from model import cnn  # local package import
+
+from .model import cnn  # local package import
 
 print(f"TensorFlow Version: {tf.version.VERSION}")
 
