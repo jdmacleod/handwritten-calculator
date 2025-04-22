@@ -40,10 +40,10 @@ python train_digits_cnn.py
 python train_symbols_cnn.py
 ```
 
-#### Copy trained model files to project directory
+#### Copy trained model files to project directory (placed with backend to simplify Docker deployment)
 
 ```bash
-cp -pv *.keras ../trained_models
+cp -pv *.keras ../demo/backend/trained_models
 ```
 
 ### Collect and Process Symbol Training Data
