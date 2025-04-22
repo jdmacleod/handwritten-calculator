@@ -116,9 +116,9 @@ shutil.copytree(captured_img_path, amplified_img_path, dirs_exist_ok=True)
 # amplify the symbol files with symmetry operations
 class_subfolders = [f.path for f in os.scandir(amplified_img_path)]
 for subfolder in sorted(class_subfolders):
-    folder_path = Path(subfolder)
-    logger.info("processing group %s", folder_path.stem)
-    match folder_path.stem:
+    subfolder_path = Path(subfolder)
+    logger.info("processing group %s", subfolder_path.stem)
+    match subfolder_path.stem:
         case "addition_plus":
             amplify_dataset(
                 subfolder, operations=["rot90", "rot180", "rot270", "flip", "flop"]
