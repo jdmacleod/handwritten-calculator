@@ -1,14 +1,22 @@
+"""Backend Flask application for the demo project."""
+
 import os
 
-from app_config import APP_NAME, APP_VERSION, MODEL_TYPE  # local package import
 from flask import Flask, jsonify
-from views import CaptureItemView, IndexView, PredictDigitView, PredictSymbolView
+
+from .app_config import APP_NAME, APP_VERSION, MODEL_TYPE  # local package import
+from .views import CaptureItemView, IndexView, PredictDigitView, PredictSymbolView
 
 app = Flask(__name__)
 
 
 @app.route("/heartbeat")
-def heartbeat():
+def heartbeat() -> str:
+    """Return a heartbeat response.
+
+    Returns:
+        str: _description_
+    """
     return jsonify(
         {
             "name": APP_NAME,

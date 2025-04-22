@@ -1,21 +1,27 @@
+"Services for the backend application."
+
 import base64
 import io
 import logging
 import os
+import pathlib
 
 import numpy as np
 import tensorflow as tf
-from core import logger  # local package import
-from image_processing import center_grayscale_image_pil, ensure_image_padding
 from PIL import Image, ImageOps
 from tensorflow import keras
 
+from .core import logger  # local package import
+from .image_processing import center_grayscale_image_pil, ensure_image_padding
+
 
 class PredictService:
-    def __init__(self, model_path: str):
+    """Service for making predictions using a trained model."""
+
+    def __init__(self, model_path: pathlib.Path) -> None:
         """Initialize the PredictService with a model path.
         Args:
-            model_path (str): Path to the trained model.
+            model_path (pathlib.Path): Path to the trained model.
         """
         self.model = tf.keras.models.load_model(model_path)
         self.probability_model = keras.Sequential([self.model, keras.layers.Softmax()])
@@ -87,6 +93,8 @@ class PredictService:
 
 
 class CaptureItemService:
+    """Service for capturing and processing images."""
+
     def __init__(self) -> None:
         pass
 

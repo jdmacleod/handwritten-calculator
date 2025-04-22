@@ -1,9 +1,12 @@
+"""Image processing routines for the backend application."""
+
 import base64
 from io import BytesIO
 
 import numpy as np
-from core import logger  # local package import
 from PIL import Image, ImageChops, ImageOps
+
+from .core import logger  # local package import
 
 
 def data_uri_to_image(uri: str) -> Image.Image:
@@ -100,16 +103,6 @@ def resize_image(image: Image.Image) -> Image.Image:
         Image.Image: The resized image.
     """
     return image.resize((8, 8), Image.BILINEAR)
-
-
-def pad_image_borders(image: Image.Image) -> Image.Image:
-    """Pad an image so it has a percentage of open border.
-
-    The MNIST Digits training set does not generally have writing that extends
-    to the edge of the image.
-
-    """
-    pass
 
 
 def center_grayscale_image(image: np.ndarray) -> np.ndarray:

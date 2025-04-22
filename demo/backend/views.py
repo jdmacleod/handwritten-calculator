@@ -1,17 +1,29 @@
-from app_config import MODEL_PATH, MODEL_TYPE
-from core import logger  # local package import
+"""Views for the backend application."""
+
 from flask import jsonify, render_template, request
 from flask.views import MethodView, View
-from services import CaptureItemService, PredictService
+
+from .app_config import MODEL_PATH, MODEL_TYPE
+from .core import logger  # local package import
+from .services import CaptureItemService, PredictService
 
 
 class IndexView(View):
-    def dispatch_request(self):
+    """The index view for the application."""
+
+    def dispatch_request(self) -> str:
+        """Render the index page."""
         return render_template("index.html")
 
 
 class PredictDigitView(MethodView):
-    def post(self):
+    """The view for predicting digits."""
+
+    def post(self) -> str:
+        """Handle the prediction request for digits.
+        Returns:
+            str: JSON response with prediction and confidence.
+        """
         model_path = MODEL_PATH / f"hc-digits-{MODEL_TYPE}-model.keras"
         service = PredictService(model_path=model_path)
         image_data_uri = request.json["image"]
@@ -24,7 +36,13 @@ class PredictDigitView(MethodView):
 
 
 class PredictSymbolView(MethodView):
-    def post(self):
+    """The view for predicting symbols."""
+
+    def post(self) -> str:
+        """Handle the prediction request for symbols.
+        Returns:
+            str: JSON response with prediction and confidence.
+        """
         model_path = MODEL_PATH / f"hc-symbols-{MODEL_TYPE}-model.keras"
         service = PredictService(model_path=model_path)
         image_data_uri = request.json["image"]
@@ -37,7 +55,13 @@ class PredictSymbolView(MethodView):
 
 
 class CaptureItemView(MethodView):
-    def post(self):
+    """The view for capturing items."""
+
+    def post(self) -> str:
+        """Handle the capture item request.
+        Returns:
+            str: JSON response with the capture file path.
+        """
         service = CaptureItemService()
         image_data_uri = request.json["image"]
         logger.debug(f"Received image_data_uri: {image_data_uri}")

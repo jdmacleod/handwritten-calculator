@@ -20,7 +20,7 @@ MODEL_PATH = Path(os.getenv("MODEL_PATH", "./"))
 # Set the type of model to be used by the demo
 MODEL_TYPE = os.getenv("MODEL_TYPE", "mlp")
 
-logger.info(f"using model type {MODEL_TYPE}")
+logger.info("using model type %s", MODEL_TYPE)
 
 # Path for all data used in API
 DATA_PATH = Path(os.getenv("DATA_PATH", "/data"))
@@ -30,7 +30,7 @@ CAPTURE_PREFIX = "capture"
 
 # Path where all captured symbol images are stored
 CAPTURE_PATH = DATA_PATH / CAPTURE_PREFIX
-logger.info(f"using path {CAPTURE_PATH} to store captured symbol images")
+logger.info("using path %s to store captured symbol images", CAPTURE_PATH)
 
 # Make sure any of those paths exist
 os.makedirs(DATA_PATH, exist_ok=True)
