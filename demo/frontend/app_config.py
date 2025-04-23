@@ -15,4 +15,4 @@ API_URL = os.getenv("API_URL", "http://localhost:5001/api/v1")
 
 logger.info("using api url %s", API_URL)
 
-API_TIMEOUT = int(os.getenv("API_TIMEOUT", "5"))
+API_TIMEOUT = int(os.getenv("API_TIMEOUT", "2"))

@@ -3,7 +3,7 @@
 import requests.exceptions
 from flask import Flask, jsonify, render_template, request
 
-from .app_config import API_URL, APP_NAME, APP_VERSION
+from .app_config import API_TIMEOUT, API_URL, APP_NAME, APP_VERSION
 from .model import (
     capture_item_from_input,
     predict_digit_from_input,
@@ -56,6 +56,10 @@ def predict_digit() -> str:
         app.logger.error("Connection Error during prediction: %s", e)
         exception_message = f"Error connecting to backend URL {API_URL}. Check if the backend is running."
         response = {"prediction": "?", "confidence": "0", "message": exception_message}
+    except requests.exceptions.ReadTimeout as e:
+        app.logger.error("Connection Timeout Error during prediction: %s", e)
+        exception_message = f"Error - connection to backend URL {API_URL} timed out after {API_TIMEOUT}s. Check if the backend is running properly, or is overloaded."
+        response = {"prediction": "?", "confidence": "0", "message": exception_message}
     return jsonify(response)
 
 
@@ -71,6 +75,10 @@ def predict_symbol() -> str:
     except requests.exceptions.ConnectionError as e:
         app.logger.error("Connection Error during prediction: %s", e)
         exception_message = f"Error connecting to backend URL {API_URL}. Check if the backend is running."
+        response = {"prediction": "?", "confidence": "0", "message": exception_message}
+    except requests.exceptions.ReadTimeout as e:
+        app.logger.error("Connection Timeout Error during prediction: %s", e)
+        exception_message = f"Error - connection to backend URL {API_URL} timed out after {API_TIMEOUT}s. Check if the backend is running properly, or is overloaded."
         response = {"prediction": "?", "confidence": "0", "message": exception_message}
     return jsonify(response)
 
@@ -89,5 +97,8 @@ def capture_item() -> str:
         app.logger.error("Connection Error during capture: %s", e)
         exception_message = f"Error connecting to backend URL {API_URL}. Check if the backend is running."
         response = {"item_filename": "", "message": exception_message}
-
+    except requests.exceptions.ReadTimeout as e:
+        app.logger.error("Connection Timeout Error during capture: %s", e)
+        exception_message = f"Error - connection to backend URL {API_URL} timed out after {API_TIMEOUT}s. Check if the backend is running properly, or is overloaded."
+        response = {"item_filename": "", "message": exception_message}
     return jsonify(response)

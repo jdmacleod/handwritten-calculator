@@ -23,7 +23,7 @@ flask run
 
 ### Test Service Heartbeat Endpoint
 
-Use [http://localhost:5000/heartbeat](http://localhost:5001/heartbeat) to check backend health.
+Use [http://localhost:5001/heartbeat](http://localhost:5001/heartbeat) to check backend health.
 
 ## Acknowledgements
 
