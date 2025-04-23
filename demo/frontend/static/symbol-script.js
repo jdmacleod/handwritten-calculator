@@ -2,6 +2,7 @@ const predictButton = document.getElementById("predictButton");
 const clearButton = document.getElementById("clearButton");
 const predictionEl = document.getElementById("prediction");
 const confidenceEl = document.getElementById("confidence");
+const messageEl = document.getElementById("message");
 
 let context, canvas;
 
@@ -152,6 +153,8 @@ function clearForm() {
   clearCanvas();
   predictionEl.textContent = "?";
   confidenceEl.textContent = "";
+  messageEl.textContent = "";
+  messageEl.style.display = "none";
 }
 
 function predictSymbol(e) {
@@ -162,7 +165,7 @@ function predictSymbol(e) {
       image,
     })
     .then((response) => {
-      var { prediction, confidence } = response.data;
+      var { prediction, confidence, message } = response.data;
       // map prediction index to arithmetic symbols
       var predictionInt = parseInt(prediction);
       var symbolHTML = "";
@@ -190,6 +193,13 @@ function predictSymbol(e) {
       }
       predictionEl.innerHTML = symbolHTML;
       confidenceEl.textContent = `${parseInt(parseFloat(confidence) * 100)}%`;
+      messageEl.textContent = message;
+      // display message only when there is a message
+      if (message) {
+        messageEl.style.display = "block";
+      } else {
+        messageEl.style.display = "none";
+      }
     });
 }
 

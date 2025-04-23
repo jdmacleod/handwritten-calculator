@@ -63,5 +63,5 @@ app.add_url_rule(
 )
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5001))
+    port = int(os.environ.get("FLASK_RUN_PORT", 5001))
     app.run(host="0.0.0.0", port=port)

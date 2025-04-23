@@ -55,8 +55,8 @@ def predict_symbol_from_input(image: str) -> tuple[int, float]:
         response = requests.post(
             f"{API_URL}/predict-symbol", json=image, timeout=API_TIMEOUT
         )
-    except requests.exceptions.RequestException as e:
-        logger.error(f"Request failed: {e}")
+    except requests.exceptions.ConnectionError as e:
+        logger.error(f"Is the backend running - Connection error: {e}")
         raise
 
     logger.debug(f"Got response {response.json()}")

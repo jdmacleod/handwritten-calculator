@@ -11,6 +11,7 @@ const prediction2El = document.getElementById("prediction2");
 const confidence2El = document.getElementById("confidence2");
 const prediction3El = document.getElementById("prediction3");
 const confidence3El = document.getElementById("confidence3");
+const messageEl = document.getElementById("message");
 
 let context1, canvas1, context2, canvas2, context3, canvas3;
 
@@ -368,18 +369,24 @@ function clearPrediction1() {
   clearCanvas1();
   prediction1El.textContent = "?";
   confidence1El.textContent = "";
+  messageEl.textContent = "";
+  messageEl.style.display = "none";
 }
 
 function clearPrediction2() {
   clearCanvas2();
   prediction2El.textContent = "?";
   confidence2El.textContent = "";
+  messageEl.textContent = "";
+  messageEl.style.display = "none";
 }
 
 function clearPrediction3() {
   clearCanvas3();
   prediction3El.textContent = "?";
   confidence3El.textContent = "";
+  messageEl.textContent = "";
+  messageEl.style.display = "none";
 }
 
 // Clear all input and prediction results
@@ -397,6 +404,8 @@ function clearAll() {
 
   predictionAllEl.textContent = "?";
   confidenceAllEl.textContent = "";
+  messageEl.textContent = "";
+  messageEl.style.display = "none";
 }
 
 function predictDigit1() {
@@ -428,16 +437,31 @@ function predictAll() {
       const response3 = results[2];
       var prediction1 = response1.data.prediction;
       var confidence1 = response1.data.confidence;
+      var message1 = response1.data.message;
+
       prediction1El.textContent = prediction1;
       confidence1El.textContent = `${parseInt(parseFloat(confidence1) * 100)}%`;
 
       var prediction3 = response3.data.prediction;
       var confidence3 = response3.data.confidence;
+      var message3 = response1.data.message;
+
       prediction3El.textContent = prediction3;
       confidence3El.textContent = `${parseInt(parseFloat(confidence3) * 100)}%`;
 
       var prediction2 = response2.data.prediction;
       var confidence2 = response2.data.confidence;
+      var message2 = response2.data.message;
+
+      // display message only when there is a message
+      // display the first message that is not empty
+      if (message1 || message2 || message3) {
+        messageEl.textContent = message1 || message2 || message3;
+        messageEl.style.display = "block";
+      } else {
+        messageEl.style.display = "none";
+      }
+
       // map prediction index to arithmetic symbols
       var prediction2Int = parseInt(prediction2);
       var symbolHTML = "";

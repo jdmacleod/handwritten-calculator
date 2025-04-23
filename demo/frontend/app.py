@@ -1,8 +1,9 @@
 """Frontend application endpoints."""
 
+import requests.exceptions
 from flask import Flask, jsonify, render_template, request
 
-from .app_config import APP_NAME, APP_VERSION
+from .app_config import API_URL, APP_NAME, APP_VERSION
 from .model import (
     capture_item_from_input,
     predict_digit_from_input,
@@ -48,10 +49,13 @@ def predict_digit() -> str:
     raw_input = request.get_json(silent=True)
 
     app.logger.info("Sending raw_input: %s", raw_input)
-    prediction, confidence = predict_digit_from_input(raw_input)
-
-    response = {"prediction": str(prediction), "confidence": str(confidence)}
-
+    try:
+        prediction, confidence = predict_digit_from_input(raw_input)
+        response = {"prediction": str(prediction), "confidence": str(confidence)}
+    except requests.exceptions.ConnectionError as e:
+        app.logger.error("Connection Error during prediction: %s", e)
+        exception_message = f"Error connecting to backend URL {API_URL}. Check if the backend is running."
+        response = {"prediction": "?", "confidence": "0", "message": exception_message}
     return jsonify(response)
 
 
@@ -61,10 +65,13 @@ def predict_symbol() -> str:
     raw_input = request.get_json(silent=True)
 
     app.logger.info("Sending raw_input: %s", raw_input)
-    prediction, confidence = predict_symbol_from_input(raw_input)
-
-    response = {"prediction": str(prediction), "confidence": str(confidence)}
-
+    try:
+        prediction, confidence = predict_symbol_from_input(raw_input)
+        response = {"prediction": str(prediction), "confidence": str(confidence)}
+    except requests.exceptions.ConnectionError as e:
+        app.logger.error("Connection Error during prediction: %s", e)
+        exception_message = f"Error connecting to backend URL {API_URL}. Check if the backend is running."
+        response = {"prediction": "?", "confidence": "0", "message": exception_message}
     return jsonify(response)
 
 
@@ -74,8 +81,13 @@ def capture_item() -> str:
     raw_input = request.get_json(silent=True)
 
     app.logger.info("Sending raw_input: %s", raw_input)
-    item_filename = capture_item_from_input(raw_input)
+    try:
+        item_filename = capture_item_from_input(raw_input)
+        response = {"item_filename": str(item_filename)}
 
-    response = {"item_filename": str(item_filename)}
+    except requests.exceptions.ConnectionError as e:
+        app.logger.error("Connection Error during capture: %s", e)
+        exception_message = f"Error connecting to backend URL {API_URL}. Check if the backend is running."
+        response = {"item_filename": "", "message": exception_message}
 
     return jsonify(response)

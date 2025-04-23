@@ -1,7 +1,7 @@
 const captureButton = document.getElementById("captureButton");
 const clearButton = document.getElementById("clearButton");
 const symbolEl = document.getElementById("symbol");
-const confidenceEl = document.getElementById("confidence");
+const messageEl = document.getElementById("message");
 
 let context, canvas;
 
@@ -147,6 +147,8 @@ function finishDrawing(mouseEvent, sigCanvas, context) {
 function clearCanvas() {
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.fillRect(0, 0, canvas.width, canvas.height);
+  messageEl.textContent = "";
+  messageEl.style.display = "none";
 }
 
 // Generate a UUID, avoiding https limitations
@@ -179,6 +181,14 @@ function captureItem(e) {
     })
     .then(function (response) {
       console.log(response);
+      var { item_filename, message } = response.data;
+      messageEl.textContent = message;
+      // display message only when there is a message
+      if (message) {
+        messageEl.style.display = "block";
+      } else {
+        messageEl.style.display = "none";
+      }
     })
     .catch(function (error) {
       console.log(error);
