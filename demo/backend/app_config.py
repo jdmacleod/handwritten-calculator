@@ -12,7 +12,7 @@ APP_VERSION = "0.1.0"
 
 APP_ROOT = os.getenv("APP_ROOT", "/opt/handwritten-calculator")
 
-API_URL = os.getenv("API_URL", "http://localhost:5000")
+API_URL = os.getenv("API_URL", "http://localhost:5001")
 
 # Path where the trained models are stored
 MODEL_PATH = Path(os.getenv("MODEL_PATH", "./"))

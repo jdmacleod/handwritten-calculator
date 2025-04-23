@@ -11,7 +11,7 @@ APP_VERSION = "0.1.0"
 
 APP_ROOT = os.getenv("APP_ROOT", "/opt/handwritten-calculator")
 
-API_URL = os.getenv("API_URL", "http://localhost:5000/api/v1")
+API_URL = os.getenv("API_URL", "http://localhost:5001/api/v1")
 
 logger.info("using api url %s", API_URL)
 
