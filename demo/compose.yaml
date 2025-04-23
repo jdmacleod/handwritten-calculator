@@ -1,0 +1,25 @@
+services:
+  hwcalc-backend:
+    build:
+      context: ./backend
+      target: hwcalc-backend-builder
+    environment:
+      - MODEL_TYPE=cnn
+    # flask requires SIGINT to stop gracefully
+    # (default stop signal from Compose is SIGTERM)
+    stop_signal: SIGINT
+    ports:
+      - '8001:5001'
+  hwcalc-frontend:
+    depends_on:
+      - hwcalc-backend
+    build:
+      context: ./frontend
+      target: hwcalc-frontend-builder
+    environment:
+      - API_URL=http://hwcalc-backend:5001/api/v1
+    # flask requires SIGINT to stop gracefully
+    # (default stop signal from Compose is SIGTERM)
+    stop_signal: SIGINT
+    ports:
+      - '8000:5000'

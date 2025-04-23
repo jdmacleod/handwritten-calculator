@@ -25,6 +25,20 @@ flask run
 
 Use [http://localhost:5001/heartbeat](http://localhost:5001/heartbeat) to check backend health.
 
+## Docker
+
+Build the image
+
+```bash
+docker build --tag hwcalc-backend .
+```
+
+Run the image in a container, connecting container port 5001 to external port 8001
+
+```bash
+docker run --name hwcalc-backend-demo -p 8001:5001 hwcalc-backend
+```
+
 ## Acknowledgements
 
 Extends the <https://www.toptal.com/data-science/machine-learning-number-recognition> example from [Teimur Gasanov](https://www.toptal.com/resume/teimur-gasanov).

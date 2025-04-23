@@ -15,9 +15,22 @@ To get both the frontend and backend running, follow the Quick Start in the READ
 
 You can access them at:
 
-- **Frontend:** [http://localhost:5001](http://localhost:5001)
-- **Backend:** [http://localhost:5000](http://localhost:5000)
+- **Frontend:** [http://localhost:5000](http://localhost:5000)
+- **Backend:** [http://localhost:5001](http://localhost:5001)
 
 ### Running the Backend Locally
 
 Options for the `MODEL_TYPE` value in [development.env](./backend/development.env) are "cnn" and "mlp" (default).
+
+## Docker Compose
+
+Run both services with [Docker Compose](https://docs.docker.com/compose/):
+
+```bash
+docker compose up
+```
+
+The Dockerized services are on different ports:
+
+- **Frontend:** [http://localhost:8000](http://localhost:8000)
+- **Backend:** [http://localhost:8001](http://localhost:8001)

@@ -50,6 +50,10 @@ Run a web app locally to do some math, demo the models, and capture your own set
 
 The symbol dataset is licensed under the [MIT License](./LICENSE). All other code is covered by its respective licenses.
 
+## Changes
+
+See [CHANGELOG](./CHANGELOG.md) for notable changes to this codebase.
+
 ## Contributing
 
 See [CONTRIBUTING](./CONTRIBUTING.md) for details. Pull requests and suggestions welcome.
