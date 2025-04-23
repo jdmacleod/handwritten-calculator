@@ -1,22 +1,38 @@
+"Services for the backend application."
+
 import base64
 import io
 import logging
 import os
+import pathlib
 
 import numpy as np
 import tensorflow as tf
-from core import logger  # local package import
-from image_processing import center_grayscale_image_pil, ensure_image_padding
 from PIL import Image, ImageOps
 from tensorflow import keras
 
+from .core import logger  # local package import
+from .image_processing import center_grayscale_image_pil, ensure_image_padding
+
 
 class PredictService:
-    def __init__(self, model_path):
+    """Service for making predictions using a trained model."""
+
+    def __init__(self, model_path: pathlib.Path) -> None:
+        """Initialize the PredictService with a model path.
+        Args:
+            model_path (pathlib.Path): Path to the trained model.
+        """
         self.model = tf.keras.models.load_model(model_path)
         self.probability_model = keras.Sequential([self.model, keras.layers.Softmax()])
 
-    def handle(self, image_data_uri):
+    def handle(self, image_data_uri: str) -> tuple[int, float]:
+        """Handle the prediction request.
+        Args:
+            image_data_uri (str): Base64 encoded image data URI.
+        Returns:
+            tuple: prediction and confidence
+        """
         encoded_data = image_data_uri.split(",")[1]
         image_data = base64.urlsafe_b64decode(encoded_data)
 
@@ -77,10 +93,20 @@ class PredictService:
 
 
 class CaptureItemService:
-    def __init__(self):
+    """Service for capturing and processing images."""
+
+    def __init__(self) -> None:
         pass
 
-    def handle(self, image_data_uri, symbol_name, uuid):
+    def handle(self, image_data_uri: str, symbol_name: str, uuid: str) -> str:
+        """Handle the capture item request.
+        Args:
+            image_data_uri (str): Base64 encoded image data URI.
+            symbol_name (str): Name of the symbol.
+            uuid (str): Unique identifier for the image.
+        Returns:
+            str: Path to the saved image.
+        """
         logger.debug(f"symbol name is {symbol_name}")
         logger.debug(f"uuid is {uuid}")
         encoded_data = image_data_uri.split(",")[1]
@@ -120,7 +146,6 @@ class CaptureItemService:
 
         # if we're debugging...
         if logger.isEnabledFor(logging.DEBUG):
-
             # Convert the image into numpy array
             image = np.array(image)
 

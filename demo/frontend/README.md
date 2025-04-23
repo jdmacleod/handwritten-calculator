@@ -29,7 +29,13 @@ flask run --host=0.0.0.0
 
 ### Connect to Web App
 
-Point a web browser to the URL reported by flask - likely either <http://localhost:5001> or a local network IP address like <http:192.168.1.19:5001>
+Point a web browser to the URL reported by flask - likely either <http://localhost:5000> or a local network IP address like <http:192.168.1.19:5000>
+
+## Docker
+
+docker build --tag hwcalc-frontend .
+
+docker run --name hwcalc-frontend-demo -p 8000:5000 hwcalc-frontend
 
 ## Acknowledgements
 

@@ -1,18 +1,33 @@
+"""Image processing routines for the backend application."""
+
 import base64
 from io import BytesIO
 
 import numpy as np
-from core import logger  # local package import
 from PIL import Image, ImageChops, ImageOps
 
+from .core import logger  # local package import
 
-def data_uri_to_image(uri):
+
+def data_uri_to_image(uri: str) -> Image.Image:
+    """Convert a data URI to a PIL Image.
+    Args:
+        uri (str): The data URI to convert.
+    Returns:
+        Image.Image: The converted PIL Image.
+    """
     encoded_data = uri.split(",")[1]
     image = base64.b64decode(encoded_data)
     return Image.open(BytesIO(image))
 
 
-def replace_transparent_background(image):
+def replace_transparent_background(image: Image.Image) -> Image.Image:
+    """Replace transparent background with white.
+    Args:
+        image (Image.Image): The input image.
+    Returns:
+        Image.Image: The image with transparent background replaced.
+    """
     image_arr = np.array(image)
 
     has_no_alpha = len(image_arr.shape) < 3 or image_arr.shape[2] < 4
@@ -33,7 +48,13 @@ def replace_transparent_background(image):
     return Image.fromarray(image_arr)
 
 
-def trim_borders(image):
+def trim_borders(image: Image.Image) -> Image.Image:
+    """Trim borders of an image.
+    Args:
+        image (Image.Image): The input image.
+    Returns:
+        Image.Image: The trimmed image.
+    """
     bg = Image.new(image.mode, image.size, image.getpixel((0, 0)))
     diff = ImageChops.difference(image, bg)
     diff = ImageChops.add(diff, diff, 2.0, -100)
@@ -44,34 +65,47 @@ def trim_borders(image):
     return image
 
 
-def pad_image(image):
-    """Pad image by 56 pixels all around, one-half image."""
+def pad_image(image: Image.Image) -> Image.Image:
+    """Pad image by 56 pixels all around, one-half image.
+    Args:
+        image (Image.Image): The input image.
+    Returns:
+        Image.Image: The padded image.
+    """
     return ImageOps.expand(image, border=56, fill="#fff")
 
 
-def to_grayscale(image):
+def to_grayscale(image: Image.Image) -> Image.Image:
+    """Convert an image to grayscale.
+    Args:
+        image (Image.Image): The input image.
+    Returns:
+        Image.Image: The grayscale image.
+    """
     return image.convert("L")
 
 
-def invert_colors(image):
+def invert_colors(image: Image.Image) -> Image.Image:
+    """Invert the colors of an image.
+    Args:
+        image (Image.Image): The input image.
+    Returns:
+        Image.Image: The image with inverted colors.
+    """
     return ImageOps.invert(image)
 
 
-def resize_image(image):
-    return image.resize((8, 8), Image.BILINEAR)
-
-
-def pad_image_borders(image):
-    """Pad an image so it has a percentage of open border.
-
-    The MNIST Digits training set does not generally have writing that extends
-    to the edge of the image.
-
+def resize_image(image: Image.Image) -> Image.Image:
+    """Resize an image to 8x8 pixels.
+    Args:
+        image (Image.Image): The input image.
+    Returns:
+        Image.Image: The resized image.
     """
-    pass
+    return image.resize((8, 8), Image.Resampling.BILINEAR)
 
 
-def center_grayscale_image(image):
+def center_grayscale_image(image: np.ndarray) -> np.ndarray:
     """Center a grayscale image using cv2."""
     center_x = image.shape[1] // 2
     center_y = image.shape[0] // 2
@@ -94,8 +128,15 @@ def center_grayscale_image(image):
     return centered_image
 
 
-def center_grayscale_image_pil(image):
-    """Center the contents of a grayscale image using PIL."""
+def center_grayscale_image_pil(image: Image.Image) -> Image.Image:
+    """Center the contents of a grayscale image using PIL.
+    The image is padded by half its dimension all around, and then cropped
+    to the original size. This centers the image content.
+    Args:
+        image (Image.Image): The input image.
+    Returns:
+        Image.Image: The centered image.
+    """
     # pad image by half dimension all around
     pad_value = image.size[0] // 2
     logger.debug(f"padding image all around with black by: {pad_value} pixels")
@@ -121,8 +162,18 @@ def center_grayscale_image_pil(image):
     return image
 
 
-def ensure_image_padding(image, min_padding_ratio=0.28):
-    """Ensure a grayscale image has minimum padding using PIL."""
+def ensure_image_padding(
+    image: Image.Image, min_padding_ratio: float = 0.28
+) -> Image.Image:
+    """Ensure a grayscale image has minimum padding using PIL.
+    The image is padded by half its dimension all around, and then cropped
+    to the original size. This centers the image content.
+    Args:
+        image (Image.Image): The input image.
+        min_padding_ratio (float): The minimum padding ratio to ensure.
+    Returns:
+        Image.Image: The padded image.
+    """
     # get bounding box of image content
     bbox = image.getbbox()
     logger.debug(f"ensure padding image bbox = {bbox}")
@@ -143,7 +194,13 @@ def ensure_image_padding(image, min_padding_ratio=0.28):
     return image
 
 
-def process_image(data_uri):
+def process_image(data_uri: str) -> np.ndarray:
+    """Process an image from a data URI.
+    Args:
+        data_uri (str): The data URI of the image.
+    Returns:
+        np.ndarray: The processed image as a NumPy array.
+    """
     image = data_uri_to_image(data_uri)
 
     is_empty = not image.getbbox()

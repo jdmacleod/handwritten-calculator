@@ -1,7 +1,10 @@
+"""Train symbol classifier using MLP model."""
+
 import os
 
 import tensorflow as tf
-from model import mlp  # local package import
+
+from .model import mlp  # local package import
 
 print(f"TensorFlow Version: {tf.version.VERSION}")
 
@@ -61,7 +64,8 @@ print(class_names)
 
 # scale the pixel values in the training dataset to be between 0-1 instead of 0-255
 # this also converts the pixel values from integer to floating point
-# TODO: find the reference that explains the reasons for this step
+# See this post on why normalizing the data range is done
+# https://stats.stackexchange.com/questions/253172/how-should-i-normalise-the-inputs-to-a-neural-network
 
 normalization_layer = tf.keras.layers.Rescaling(1.0 / 255)
 normalized_train_ds = train_images_ds.map(lambda x, y: (normalization_layer(x), y))
@@ -84,7 +88,7 @@ model.summary()
 # here we pass in a tf.data.Dataset as the input data
 # https://www.tensorflow.org/api_docs/python/tf/keras/Model#evaluate
 loss, acc = model.evaluate(normalized_test_ds, verbose=2)
-print("untrained model, test accuracy: {:5.2f}%".format(100 * acc))
+print(f"untrained model, test accuracy: {100 * acc:5.2f}%")
 
 # train the model
 # here we pass in a tf.data.Dataset as the input data
@@ -94,10 +98,10 @@ model.fit(normalized_train_ds, validation_data=normalized_validate_ds, epochs=10
 # evaluate model after training on the test set
 # here we pass in a tf.data.Dataset as the input data
 loss, acc = model.evaluate(normalized_test_ds, verbose=2)
-print("trained model, test accuracy: {:5.2f}%".format(100 * acc))
+print(f"trained model, test accuracy: {100 * acc:5.2f}%")
 
 # This model is a "multi-layer perceptron"
-model_filename = f"hc-symbols-{MODEL_TYPE}-model.keras"
+MODEL_FILENAME = f"hc-symbols-{MODEL_TYPE}-model.keras"
 
-model.save(model_filename)
-print(f"saved trained model as: {model_filename}")
+model.save(MODEL_FILENAME)
+print(f"saved trained model as: {MODEL_FILENAME}")

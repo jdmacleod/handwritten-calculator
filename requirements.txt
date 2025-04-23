@@ -1,0 +1,8 @@
+Flask
+Pillow
+matplotlib
+numpy
+requests
+split-folders
+tensorflow
+tqdm

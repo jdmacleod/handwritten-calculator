@@ -1,5 +1,8 @@
+"""Train digit classifier using MLP model."""
+
 import tensorflow as tf
-from model import mlp  # local package import
+
+from .model import mlp  # local package import
 
 print(f"TensorFlow Version: {tf.version.VERSION}")
 
@@ -15,7 +18,8 @@ MODEL_TYPE = "mlp"
 
 # scale the pixel values in the dataset to be between 0-1 instead of 0-255
 # this also converts the pixel values from integer to floating point
-# TODO: find the reference that explains the reasons for this step
+# See this post on why normalizing the data range is done
+# https://stats.stackexchange.com/questions/253172/how-should-i-normalise-the-inputs-to-a-neural-network
 train_images = train_images / 255.0
 test_images = test_images / 255.0
 
@@ -31,16 +35,16 @@ model.summary()
 
 # evaluate model before training on the test set
 loss, acc = model.evaluate(test_images, test_labels, verbose=2)
-print("untrained model, test accuracy: {:5.2f}%".format(100 * acc))
+print(f"untrained model, test accuracy: {100 * acc:5.2f}%")
 
 model.fit(train_images, train_labels, epochs=10)
 
 # evaluate model after training on the test set
 loss, acc = model.evaluate(test_images, test_labels, verbose=2)
-print("trained model, test accuracy: {:5.2f}%".format(100 * acc))
+print(f"trained model, test accuracy: {100 * acc:5.2f}%")
 
 # This model is a "multi-layer perceptron"
-model_filename = f"hc-digits-{MODEL_TYPE}-model.keras"
+MODEL_FILENAME = f"hc-digits-{MODEL_TYPE}-model.keras"
 
-model.save(model_filename)
-print(f"saved trained model as: {model_filename}")
+model.save(MODEL_FILENAME)
+print(f"saved trained model as: {MODEL_FILENAME}")
