@@ -2,7 +2,7 @@ services:
   hwcalc-backend:
     build:
       context: ./backend
-      target: hwcalc-backend-builder
+      target: hwcalc-backend-svc
     environment:
       - MODEL_TYPE=cnn
     # flask requires SIGINT to stop gracefully
