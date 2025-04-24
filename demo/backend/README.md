@@ -21,6 +21,8 @@ source development.env
 flask run
 ```
 
+**Note** The 'capture' functionality of the service will only function properly (writing input images to local disk) when it is run manually, as in this usage.
+
 ### Test Service Heartbeat Endpoint
 
 Use [http://localhost:5001/heartbeat](http://localhost:5001/heartbeat) to check backend health.
