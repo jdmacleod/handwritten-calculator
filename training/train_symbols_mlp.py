@@ -2,6 +2,7 @@
 
 import os
 
+import keras  # direct import as of TensorFlow 2.16
 import tensorflow as tf
 
 from .model import mlp  # local package import
@@ -30,7 +31,7 @@ BATCH_SIZE = 32
 IMG_HEIGHT = 28
 IMG_WIDTH = 28
 
-train_images_ds = tf.keras.utils.image_dataset_from_directory(
+train_images_ds = keras.utils.image_dataset_from_directory(
     training_data_dir,
     color_mode="grayscale",
     seed=123,
@@ -38,7 +39,7 @@ train_images_ds = tf.keras.utils.image_dataset_from_directory(
     image_size=(IMG_HEIGHT, IMG_WIDTH),
 )
 
-validate_images_ds = tf.keras.utils.image_dataset_from_directory(
+validate_images_ds = keras.utils.image_dataset_from_directory(
     validation_data_dir,
     color_mode="grayscale",
     seed=123,
@@ -51,7 +52,7 @@ validate_images_ds = tf.keras.utils.image_dataset_from_directory(
 # https://keras.io/api/datasets/mnist/
 # https://stackoverflow.com/questions/13610074/is-there-a-rule-of-thumb-for-how-to-divide-a-dataset-into-training-and-validatio
 
-test_images_ds = tf.keras.utils.image_dataset_from_directory(
+test_images_ds = keras.utils.image_dataset_from_directory(
     testing_data_dir,
     color_mode="grayscale",
     seed=123,
@@ -67,7 +68,7 @@ print(class_names)
 # See this post on why normalizing the data range is done
 # https://stats.stackexchange.com/questions/253172/how-should-i-normalise-the-inputs-to-a-neural-network
 
-normalization_layer = tf.keras.layers.Rescaling(1.0 / 255)
+normalization_layer = keras.layers.Rescaling(1.0 / 255)
 normalized_train_ds = train_images_ds.map(lambda x, y: (normalization_layer(x), y))
 normalized_validate_ds = validate_images_ds.map(
     lambda x, y: (normalization_layer(x), y)

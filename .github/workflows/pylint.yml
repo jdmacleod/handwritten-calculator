@@ -22,5 +22,5 @@ jobs:
     - name: Analysing the code with pylint
       run: |
         # pylint $(git ls-files '*.py')   # strictest
-        # pylint --disable=C,R $(git ls-files '*.py')   # medium
-        pylint --errors-only $(git ls-files '*.py')   # ease into pylint
+        pylint --disable=C,R $(git ls-files '*.py')   # medium
+        # pylint --errors-only $(git ls-files '*.py')   # ease into pylint

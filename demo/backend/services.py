@@ -6,10 +6,9 @@ import logging
 import os
 import pathlib
 
+import keras  # direct import as of TensorFlow 2.16
 import numpy as np
-import tensorflow as tf
 from PIL import Image, ImageOps
-from tensorflow import keras
 
 from .core import logger  # local package import
 from .image_processing import center_grayscale_image_pil, ensure_image_padding
@@ -23,7 +22,7 @@ class PredictService:
         Args:
             model_path (pathlib.Path): Path to the trained model.
         """
-        self.model = tf.keras.models.load_model(model_path)
+        self.model = keras.models.load_model(model_path)
         self.probability_model = keras.Sequential([self.model, keras.layers.Softmax()])
 
     def handle(self, image_data_uri: str) -> tuple[int, float]:

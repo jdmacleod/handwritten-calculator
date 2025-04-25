@@ -3,13 +3,12 @@
 # adapts the CNN example from TensorFlow tutorial
 # https://www.tensorflow.org/tutorials/images/cnn
 
-import tensorflow as tf
-from tensorflow import keras
+import keras  # direct import as of TensorFlow 2.16
 
 
-def create_model(num_classes: int = 10) -> tf.keras.Model:
+def create_model(num_classes: int = 10) -> keras.Model:
     """Create example CNN model after the TensorFlow tutorial."""
-    model = tf.keras.Sequential(
+    model = keras.Sequential(
         name="CNN_Sequential",
         layers=[
             keras.Input(shape=(28, 28, 1)),
@@ -39,7 +38,7 @@ def create_model(num_classes: int = 10) -> tf.keras.Model:
     )
     model.compile(
         optimizer="adam",
-        loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+        loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True),
         metrics=["accuracy"],
     )
     return model

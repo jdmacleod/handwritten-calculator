@@ -4,13 +4,12 @@
 # https://www.tensorflow.org/tutorials/quickstart/beginner#build_a_machine_learning_model
 # https://www.tensorflow.org/guide/keras/sequential_model
 
-import tensorflow as tf
-from tensorflow import keras
+import keras  # direct import as of TensorFlow 2.16
 
 
-def create_model(num_classes: int = 10) -> tf.keras.Model:
+def create_model(num_classes: int = 10) -> keras.Model:
     """Create example MLP model from TensorFlow tutorial."""
-    model = tf.keras.Sequential(
+    model = keras.Sequential(
         name="MLP_Sequential",
         layers=[
             keras.Input(shape=(28, 28, 1)),
@@ -22,7 +21,7 @@ def create_model(num_classes: int = 10) -> tf.keras.Model:
     )
     model.compile(
         optimizer="adam",
-        loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+        loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True),
         metrics=["accuracy"],
     )
     return model

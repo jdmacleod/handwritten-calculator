@@ -1,5 +1,6 @@
 """Train digit classifier using CNN model."""
 
+import keras  # direct import as of TensorFlow 2.16
 import tensorflow as tf
 
 from .model import cnn  # local package import
@@ -8,7 +9,7 @@ print(f"TensorFlow Version: {tf.version.VERSION}")
 
 # Load the MNIST handwritten numbers dataset
 (train_images, train_labels), (test_images, test_labels) = (
-    tf.keras.datasets.mnist.load_data()
+    keras.datasets.mnist.load_data()
 )
 
 # MNIST digits dataset has 10 classes, digits 0-9
